@@ -3,7 +3,8 @@
 Copied by `npm run sql:sync` from the case-study repo
 (https://github.com/atokim4/vibe-rescue-nextjs-supabase). Do not edit them here; change the case study and sync.
 
-Refs in the case study's commit history at the time of the copy:
+Refs in the case study's local commit history at the time of the copy (the public repo is a snapshot of `main`,
+so these hashes and the `v0-broken` tag are not in it; `before/` here is the public copy of the broken migration):
 
 - `v0-broken` = 9fce369
 - `main` = de978f7

@@ -1,10 +1,12 @@
 # Jotpad rescue: live lab
 
+**Live:** https://sunnatulla-vibe-rescue.netlify.app (runs entirely in your browser; first load is about 5 MB)
+
 A static page that replays four bugs from my
 [Next.js + Supabase + Stripe rescue case study](https://github.com/atokim4/vibe-rescue-nextjs-supabase) against
-the case study's real SQL migrations. Each bug has a Before / After toggle: Before loads the migrations from tag
-`v0-broken`, After loads the ones on `main`, and the same requests run against both. (The public case-study repo
-holds a snapshot of `main`; the broken migration is kept here in `src/sql/before/`.)
+the case study's real SQL migrations. Each bug has a Before / After toggle: Before loads the broken migrations (`v0-broken`),
+After loads the fixed ones (`main`), and the same requests run against both. (The public case-study repo holds a
+snapshot of the fixed version; the broken migration is kept here in `src/sql/before/`.)
 
 Postgres runs in your browser ([PGlite](https://pglite.dev), Postgres compiled to WebAssembly) in a Web Worker.
 There is no server, no Supabase project and no API key. This is a personal portfolio project, and all the data
@@ -30,8 +32,9 @@ More in [docs/screenshots](docs/screenshots): each scenario before and after, an
 
 - **The SQL is the case study's, unchanged.** `src/sql/` holds the Supabase stand-in from the case study's test
   suite (`anon` / `authenticated` / `service_role` roles, `auth.users`, `auth.uid()` reading
-  `request.jwt.claims`) and the migrations at both refs. `npm run sql:sync -- <path to the case-study clone>`
-  copies them with `git show`; `src/sql/SOURCE.md` records which commit each file came from.
+  `request.jwt.claims`) and the migrations of both versions, already copied into this repo; `src/sql/SOURCE.md` records where each file
+  came from. (`scripts/sync-sql.mjs` is the script that copied them from my local working copy of the case
+  study, which has the full history; the public snapshot repo doesn't, so you don't need it to run the lab.)
 - **Requests run the way PostgREST runs them**: one transaction per request, `set_config('request.jwt.claims', …)`
   and `set local role …`, then the query. So RLS policies, the signup trigger and the `security definer` paywall
   function behave as they do on Supabase. PostgREST itself and Supabase Auth are not emulated: the lab sends the
@@ -44,8 +47,8 @@ More in [docs/screenshots](docs/screenshots): each scenario before and after, an
   clones it per run (about 0.5 s instead of 2 to 3 s), so runs never see each other's writes.
 
 What the lab leaves out: bug 1 (auth redirect loop), bug 4 (env vars on deploy) and bug 5 (loading and error
-states) are about the Next.js app, not the database, so they are only in the case study. The case study's
-`npm run e2e:before` reproduces bug 3's 307 redirect against the real app; the lab calls the handler directly.
+states) are about the Next.js app, not the database, so they are only in the case study. In the real broken
+app, bug 3 also showed up as a 307 redirect to /login for Stripe's request; the lab calls the handler directly.
 
 ## Run it
 
@@ -75,7 +78,7 @@ src/worker.ts             Web Worker that owns Postgres
 src/main.ts, src/ui/      the page (plain TypeScript and DOM, no framework)
 test/                     Vitest
 e2e/run.mjs               browser run (playwright-core + an installed Chrome; set CHROME_PATH)
-scripts/sync-sql.mjs      copies the SQL from the case-study repo
+scripts/sync-sql.mjs      copied the SQL from the case study's full-history working copy (not needed to run)
 ```
 
 ## Stack
