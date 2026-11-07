@@ -1,0 +1,41 @@
+{
+  "name": "vibe-rescue-live-lab",
+  "version": "0.1.0",
+  "description": "In-browser live lab for the Jotpad vibe-rescue case study: the broken and fixed Supabase migrations run in Postgres (PGlite) in your browser. Personal portfolio project.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Sunnatulla E.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "sql:sync": "node scripts/sync-sql.mjs",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "e2e": "node e2e/run.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.5",
+    "eslint": "10.14.0",
+    "globals": "17.14.0",
+    "playwright-core": "1.65.0",
+    "prettier": "3.9.10",
+    "stripe": "23.1.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.6",
+    "vitest": "5.1.0"
+  }
+}

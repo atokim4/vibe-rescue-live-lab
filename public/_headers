@@ -1,0 +1,10 @@
+# Netlify headers. `vite preview` (and so `npm run e2e`) applies the "/*" block too, so the E2E run checks this CSP.
+# Everything is same-origin; WebAssembly (PGlite) needs 'wasm-unsafe-eval'.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
