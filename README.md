@@ -3,7 +3,8 @@
 A static page that replays four bugs from my
 [Next.js + Supabase + Stripe rescue case study](https://github.com/atokim4/vibe-rescue-nextjs-supabase) against
 the case study's real SQL migrations. Each bug has a Before / After toggle: Before loads the migrations from tag
-`v0-broken`, After loads the ones on `main`, and the same requests run against both.
+`v0-broken`, After loads the ones on `main`, and the same requests run against both. (The public case-study repo
+holds a snapshot of `main`; the broken migration is kept here in `src/sql/before/`.)
 
 Postgres runs in your browser ([PGlite](https://pglite.dev), Postgres compiled to WebAssembly) in a Web Worker.
 There is no server, no Supabase project and no API key. This is a personal portfolio project, and all the data
